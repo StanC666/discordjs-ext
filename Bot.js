@@ -28,7 +28,6 @@ class CommandAdder {
     this.module_set.add(
       new Command(this.opts, fn)
     );
-    console.log(this.module_set)
   }
 }
 class Bot {
@@ -41,8 +40,7 @@ class Bot {
     this.client = new discordjs.Client({
       intents: [
         ...Object.keys(Intents.FLAGS).map(key => Intents.FLAGS[key])
-      ],
-      
+      ]
     });
     
     this.client.on("ready", (client) => {
@@ -54,32 +52,15 @@ class Bot {
     this.cmd_names = new Set();
     this.arg_objs = new Set();
     let contents = fs.readFileSync(token_env_file, {encoding: "utf8"});
-    
-      for (let i = 0; i < contents.length; i++) {
-// console.log("contents[i] =", contents[i])
-        if (contents.slice(i, i+7) === "TOKEN=\"") {
-          for (let j = i+7; contents[j] !== "\""; j++) {
-            this.TOKEN += contents[j];
-          }
+    for (let i = 0; i < contents.length; i++) {
+      if (contents.slice(i, i+7) === "TOKEN=\"") {
+        for (let j = i+7; contents[j] !== "\""; j++) {
+          this.TOKEN += contents[j];
         }
       }
+     }
    
   }
- 
-  // /**
-  //  * @param {CommandOpts} opts
-  //  * @param {(ctx :Context) => Promise<void>} fn
-  //  */
-  // add_command(opts, fn) {
-  //   this.cmd_names.add(opts.name);
-  //   if (opts.alt_names.length != 0) {
-  //     opts.alt_names.forEach(name => this.cmd_names.add(name));
-  //   }
-  //   this.modules.add(
-  //     new Command(opts, fn)
-  //   );
-  // }
-
   /**
    * @param {CommandOpts} opts
    * @returns {{ add :(fn :(ctx) => Promise<any>) => void }}
@@ -116,25 +97,15 @@ class Bot {
       if (message.tts || message.author.bot || message.system) return;
       const params = this.parse2obj(message.content);
       const ctx = new Context(this.client, message, params.args);
-      this.modules.forEach(
-      /**
-       * 
-       * @param {Command} mod 
-       */
-      mod => {
-        
-        console.log(mod)
+      this.modules.forEach(mod => {
         if (mod.options.name === params.command || mod.options.alt_names.includes(params.command)) {
           mod.fn(ctx)
-          .then()
-          .catch(err => {
-            console.error(err);
-          });
+          .then(/* idk what to do here */)
+          .catch(console.error);
         }
       });
     });
-    this.client.login(this.TOKEN)
-    
+    this.client.login(this.TOKEN);    
   }
 }
 
