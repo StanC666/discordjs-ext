@@ -1,3 +1,4 @@
 module.exports = {
-  Bot: require("./Bot")
+  Bot: require("./src/Bot"),
+  Command: require("./src/Command")
 }

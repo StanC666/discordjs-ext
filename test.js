@@ -1,15 +1,7 @@
 const { Bot } = require("./");
 
 const main = () => {
-  const bot = new Bot("t.");
-  bot
-  .command({
-    name: "ping"
-  })
-  .add(async ctx => {
-    ctx.message.reply("Ok")
-  });
-
+  const bot = new Bot("!", "../config.json");
   bot.run();
 }
 
