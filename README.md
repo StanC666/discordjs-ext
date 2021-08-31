@@ -1,7 +1,7 @@
 <h1>discordjs-ext</h1>
 
-A possibly useless minimal abstraction of the (discord.js)[https://github.com/discordjs/discord.js] library for making bots. Sort of Inspired by ((discord.ext).py)[https://github.com/Rapptz/discord.py/tree/master/discord/ext]
-Upon further additions, seeks to replace (discord.js-commando)[https://github.com/discordjs/Commando]
+A possibly useless minimal abstraction of the <a href="https://github.com/discordjs/discord.js">discord.js</a>library for making bots. 
+Upon further additions, seeks to replace <a href="https://github.com/discordjs/Commando">discord.js-commando</a>
 
 <h3>Usage</h3>
 
