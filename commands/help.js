@@ -1,5 +1,4 @@
-const { Command } = require("../");
-const { Message, MessageEmbed } = require("discord.js");
+const { Command, ReplyBuilder } = require("../");
 
 class Help extends Command {
   constructor(bot) {
@@ -7,31 +6,26 @@ class Help extends Command {
     this.name = "help";
     this.description = "the help command";
     this.args = [ "command" ];
+    this.usage = "!help <command>";
   }
-  /**
-   * 
-   * @param {Message} message 
-   * @param {*} args 
-   */
-  async execute(message, args) {
-    const embeds = [];
+
+  async execute(ctx, args) {
+    const fields = [];
+    const reply = new ReplyBuilder();
+    
     this.bot.modules.forEach((v, k) => {
-      embeds.push({
+      fields.push({
         name: v.name,
-        value: `${v.description}\n**aliases:**${k}\n**usage:**${v.usage ? v.usage : this.bot.prefix + v.name}\n**`
+        value: `**aliases**:\t${k.join(", ")}\n**description**:\t${v.description}\n**arguments**:\t${v.args.join(", ")}\n**usage**:\t${v.usage}\n**is slash command**:\t${v.is_slash_command ? "Yes" : "No"}`
       });
     });
-
-    
-    message.reply({
-      allowedMentions: {
-        parse: [ "users", "roles" ],
-        repliedUser: false
-      },
-      embeds: new MessageEmbed()
-        .addFields(embeds)
-    });
-    
+    reply.addEmbeds([
+      new ctx.MessageEmbed()
+      .setTitle("Help")
+      .setDescription("help_commands")
+      .addFields(fields)
+    ]);
+    message.reply(reply);
   }
 }
 
