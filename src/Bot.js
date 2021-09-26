@@ -51,7 +51,6 @@ class Bot extends Client {
      */
     this.btn_click_handlers = new Map();
     this.filter_fn = m => !m.tts || !m.system || !m.author.bot;
-    this.addCommand(require(`../commands/help.js`));
   }
   /**
    * add a command to the bot
@@ -73,6 +72,20 @@ class Bot extends Client {
     return this;
   }
 
+  /**
+   * Get all modules added by `Bot.addCommand`
+   * @returns {Set<Command>}
+   */
+  getCommands() {
+    const module_set = new Set();
+    for (let cmd of this.text_command_modules.values()) {
+      module_set.add(cmd);
+    }
+    for (let cmd of this.slash_command_modules.values()) {
+      module_set.add(cmd);
+    }
+    return module_set;
+  }
   /**
    * what type of messages/interactions do you want to ignore?
    * @param {(m :Message | Interaction) => void} fn 
