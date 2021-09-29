@@ -10,7 +10,7 @@ For now though, you'll have to clone the repo. Sorry :(
 <h2>Usage</h2>
 
 ```js
-const { Bot, Command, Inputs, InputComponents, ReplyBuilder } = require("discordjs-ext");
+const { Bot, Command, Inputs, InputComponent, ReplyBuilder } = require("discordjs-ext");
 
 const bot = new Bot({
   prefix: "!", // default: !
